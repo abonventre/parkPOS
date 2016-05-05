@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var router = express.Router();
 
@@ -6,8 +8,6 @@ var moment = require('moment');
 var printer = require('../helpers/printer');
 
 module.exports = function(db, prices, config){
-
-  console.log(db);
 
   // define the home page route
   router.get('/', function(req, res) {

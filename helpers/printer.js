@@ -1,4 +1,6 @@
-var printer = require("printer")
+'use strict';
+
+var printer = require("printer"),
   	fs = require('fs'),
     util = require('util'),
     printerName = 'Zebra_RW_420',

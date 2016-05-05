@@ -1,12 +1,14 @@
+'use strict';
+
 var express = require('express');
 var bodyParser = require('body-parser')
 var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
 var dbExists = fs.existsSync('./data/db.db');
 var db = new sqlite3.Database('./data/db.db');
-var jsonfile = require('jsonfile')
+var jsonfile = require('jsonfile');
 
-var filesToInit = ['config', 'prices', 'holidays']
+var filesToInit = ['config', 'prices', 'holidays'];
 
 for (var i = 0; i < filesToInit.length; i++) {
   // Check if files exist to begin with
@@ -37,8 +39,6 @@ var prices = require('./routes/prices')(prices, config);
 var shifts = require('./routes/shifts')(db, config);
 
 var app = express();
-
-console.log(dbExists);
 
 if(!dbExists){
   db.serialize(function(){
