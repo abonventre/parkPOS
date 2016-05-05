@@ -17,7 +17,7 @@ printer.printDirect({
     data: buffer, // Send the buffer to printer using CPCL
 	printer:printerName, // printer name
 	type: printerFormat, // Use RAW for direct CPCL buffer communication
-    options: 
+    options:
     {
         media: '2.5x5.5in',
         'fit-to-page': true

@@ -9,29 +9,40 @@ var jsonfile = require('jsonfile')
 var filesToInit = ['config', 'prices', 'holidays']
 
 for (var i = 0; i < filesToInit.length; i++) {
-  if(!fs.existsSync(filesToInit[i]+'.json')){
+  // Check if files exist to begin with
+  if(!fs.existsSync('./data/'+filesToInit[i]+'.json')){
     initializeFile(filesToInit[i]);
   }
 }
 console.log('Files initialized.');
 
+var prices = require('./data/prices.json');
+var config = require('./data/config.json');
+
 function initializeFile(fileName) {
+  // File name to create
   var file = './data/'+fileName+'.json';
+
+  //Init File
   var init = require('./'+fileName+'.init.json');
+
+  // Blocking write new file
   jsonfile.writeFileSync(file, init, {spaces: 2});
   console.log('Initialized file: '+fileName);
 }
 
 // Routes
-var tickets = require('./routes/tickets');
-var prices = require('./routes/prices');
-var shifts = require('./routes/shifts');
+var tickets = require('./routes/tickets')(db, prices, config);
+var prices = require('./routes/prices')(prices, config);
+var shifts = require('./routes/shifts')(db, config);
 
 var app = express();
 
+console.log(dbExists);
+
 if(!dbExists){
   db.serialize(function(){
-    db.run("CREATE TABLE IF NOT EXISTS tickets (shift_id INTEGER, start_date TEXT, days INTEGER, end_date TEXT, total INTEGER, voided INTEGER DEFAULT 0)");
+    db.run("CREATE TABLE IF NOT EXISTS tickets (shift_id INTEGER, start_date TEXT, days INTEGER, end_date TEXT, total INTEGER, voided INTEGER DEFAULT 0, failed INTEGER DEFAULT 0)");
     db.run("CREATE TABLE IF NOT EXISTS shifts (user TEXT, start_date TEXT, end_date TEXT)");
   });
   console.log("DB Initialized");
