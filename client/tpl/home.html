@@ -1,1 +1,183 @@
-Home
+<h1>parkPOS</h1>
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2>Today</h2>
+        <p class="text-muted">
+          Returning today.
+        </p>
+        <h3>${{ main.prices.daily }} <span class="text-muted">per ticket</span></h3>
+        <h3>{{ main.tickets.Today }} <span class="text-muted">tickets</span></h3>
+        <h3>${{ main.tickets.Today * main.prices.daily }} <span class="text-muted">total</span></h3>
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-info btn-block btn-lg" ng-click="main.changeTicket('add', 'Today')"><i class="fa fa-plus"></i></button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-danger btn-block btn-lg" ng-click="main.changeTicket('subtract', 'Today')"><i class="fa fa-minus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2>Overnight</h2>
+        <p class="text-muted">
+          Returning tomorrow.
+        </p>
+        <h3>${{ main.prices.daily }} <span class="text-muted">per ticket</span></h3>
+        <h3>{{ main.tickets.Today }} <span class="text-muted">tickets</span></h3>
+        <h3>${{ main.tickets.Today * main.prices.daily }} <span class="text-muted">total</span></h3>
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-info btn-block btn-lg" ng-click="main.changeTicket('add', 'Today')"><i class="fa fa-plus"></i></button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-danger btn-block btn-lg" ng-click="main.changeTicket('subtract', 'Today')"><i class="fa fa-minus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2>3 Days</h2>
+        <p class="text-muted">
+          Returning Saturday.
+        </p>
+        <h3>${{ main.prices.daily }} <span class="text-muted">per ticket</span></h3>
+        <h3>{{ main.tickets.Today }} <span class="text-muted">tickets</span></h3>
+        <h3>${{ main.tickets.Today * main.prices.daily }} <span class="text-muted">total</span></h3>
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-info btn-block btn-lg" ng-click="main.changeTicket('add', 'Today')"><i class="fa fa-plus"></i></button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-danger btn-block btn-lg" ng-click="main.changeTicket('subtract', 'Today')"><i class="fa fa-minus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2>4 Days</h2>
+        <p class="text-muted">
+          Returning Sunday.
+        </p>
+        <h3>${{ main.prices.daily }} <span class="text-muted">per ticket</span></h3>
+        <h3>{{ main.tickets.Today }} <span class="text-muted">tickets</span></h3>
+        <h3>${{ main.tickets.Today * main.prices.daily }} <span class="text-muted">total</span></h3>
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-info btn-block btn-lg" ng-click="main.changeTicket('add', 'Today')"><i class="fa fa-plus"></i></button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-danger btn-block btn-lg" ng-click="main.changeTicket('subtract', 'Today')"><i class="fa fa-minus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2>5 Days</h2>
+        <p class="text-muted">
+          Returning Monday.
+        </p>
+        <h3>${{ main.prices.daily }} <span class="text-muted">per ticket</span></h3>
+        <h3>{{ main.tickets.Today }} <span class="text-muted">tickets</span></h3>
+        <h3>${{ main.tickets.Today * main.prices.daily }} <span class="text-muted">total</span></h3>
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-info btn-block btn-lg" ng-click="main.changeTicket('add', 'Today')"><i class="fa fa-plus"></i></button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-danger btn-block btn-lg" ng-click="main.changeTicket('subtract', 'Today')"><i class="fa fa-minus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2>6 Days</h2>
+        <p class="text-muted">
+          Returning Tuesday.
+        </p>
+        <h3>${{ main.prices.daily }} <span class="text-muted">per ticket</span></h3>
+        <h3>{{ main.tickets.Today }} <span class="text-muted">tickets</span></h3>
+        <h3>${{ main.tickets.Today * main.prices.daily }} <span class="text-muted">total</span></h3>
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-info btn-block btn-lg" ng-click="main.changeTicket('add', 'Today')"><i class="fa fa-plus"></i></button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-danger btn-block btn-lg" ng-click="main.changeTicket('subtract', 'Today')"><i class="fa fa-minus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2>7 Days</h2>
+        <p class="text-muted">
+          Returning Wednesday.
+        </p>
+        <h3>${{ main.prices.daily }} <span class="text-muted">per ticket</span></h3>
+        <h3>{{ main.tickets.Today }} <span class="text-muted">tickets</span></h3>
+        <h3>${{ main.tickets.Today * main.prices.daily }} <span class="text-muted">total</span></h3>
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-info btn-block btn-lg" ng-click="main.changeTicket('add', 'Today')"><i class="fa fa-plus"></i></button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-danger btn-block btn-lg" ng-click="main.changeTicket('subtract', 'Today')"><i class="fa fa-minus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2>30 Days</h2>
+        <p class="text-muted">
+          Monthly returning 5/5.
+        </p>
+        <h3>${{ main.prices.monthly }} <span class="text-muted">per ticket</span></h3>
+        <h3>{{ main.tickets.Monthly }} <span class="text-muted">tickets</span></h3>
+        <h3>${{ main.tickets.Monthly * main.prices.monthly }} <span class="text-muted">total</span></h3>
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-info btn-block btn-lg" ng-click="main.changeTicket('add', 'Today')"><i class="fa fa-plus"></i></button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-danger btn-block btn-lg" ng-click="main.changeTicket('subtract', 'Today')"><i class="fa fa-minus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2>Custom</h2>
+        <p class="text-muted">
+          Custom start and end date.
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+</div>
