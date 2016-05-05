@@ -87,6 +87,10 @@ module.exports = function(db, prices, config){
 
     db.run("INSERT INTO tickets (shift_id, start_date, days, end_date, total) VALUES (?,?,?,?,?)", [form.shift_id, startDate, form.days, form.end_date, total], function(err){
       console.log('Created ticket: ' + this.lastID);
+      if(err){
+        console.error(err);
+        res.json({'error': 'Was not able to insert ticket to db.'});
+      };
       console.error(err);
       res.json({'lastID': this.lastID, 'total':total});
     });

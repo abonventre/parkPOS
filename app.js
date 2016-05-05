@@ -1,12 +1,12 @@
 'use strict';
 
-var express = require('express');
-var bodyParser = require('body-parser')
-var fs = require('fs');
-var sqlite3 = require('sqlite3').verbose();
-var dbExists = fs.existsSync('./data/db.db');
-var db = new sqlite3.Database('./data/db.db');
-var jsonfile = require('jsonfile');
+var express = require('express'),
+    bodyParser = require('body-parser'),
+    fs = require('fs'),
+    sqlite3 = require('sqlite3').verbose(),
+    dbExists = fs.existsSync('./data/db.db'),
+    db = new sqlite3.Database('./data/db.db'),
+    jsonfile = require('jsonfile');
 
 var filesToInit = ['config', 'prices', 'holidays'];
 
