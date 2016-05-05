@@ -5,10 +5,8 @@ var db = new sqlite3.Database('db.db');
 
 var moment = require('moment');
 
-var prices = require('../prices.json');
-
-var daily = [1,2,3,4];
-var weekend = [5,6,0];
+var prices = require('../data/prices.json');
+var config = require('../data/config.json');
 
 
 // define the home page route
@@ -50,17 +48,17 @@ router.post('/', function(req, res) {
       total += prices.weekly;
       daysRemaining -= 7;
       daysArray.splice(0,7);
-    }else if(daysArray[0] == 5 && daysArray[1] == 6 && daysArray[2] == 0){
+    }else if(daysArray[0] == 5 && daysArray[1] == 6 && daysArray[2] == 0 && config.lot == "Saltaire"){
       // Weekend Special
       total += prices.weekendSpecial;
       daysRemaining -= 3;
       daysArray.splice(0,3);
-    }else if(isInArray(daysArray[0], daily)){
+    }else if(isInArray(daysArray[0], config.weekDays)){
       // Daily
       total += prices.daily;
       daysRemaining -= 1;
       daysArray.splice(0,1);
-    }else if(isInArray(daysArray[0], weekend)){
+    }else if(isInArray(daysArray[0], config.weekendDays)){
       total += prices.weekend;
       daysRemaining -= 1;
       daysArray.splice(0,1);

@@ -2,10 +2,25 @@ var express = require('express');
 var bodyParser = require('body-parser')
 var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
-var exists = fs.existsSync('db.db');
-var db = new sqlite3.Database('db.db');
+var dbExists = fs.existsSync('./data/db.db');
+var db = new sqlite3.Database('./data/db.db');
+var jsonfile = require('jsonfile')
 
-var priceChart = require('./prices.json');
+var filesToInit = ['config', 'prices', 'holidays']
+
+for (var i = 0; i < filesToInit.length; i++) {
+  if(!fs.existsSync(filesToInit[i]+'.json')){
+    initializeFile(filesToInit[i]);
+  }
+}
+console.log('Files initialized.');
+
+function initializeFile(fileName) {
+  var file = './data/'+fileName+'.json';
+  var init = require('./'+fileName+'.init.json');
+  jsonfile.writeFileSync(file, init, {spaces: 2});
+  console.log('Initialized file: '+fileName);
+}
 
 // Routes
 var tickets = require('./routes/tickets');
@@ -14,21 +29,12 @@ var shifts = require('./routes/shifts');
 
 var app = express();
 
-if(!exists){
+if(!dbExists){
   db.serialize(function(){
     db.run("CREATE TABLE IF NOT EXISTS tickets (shift_id INTEGER, start_date TEXT, days INTEGER, end_date TEXT, total INTEGER, voided INTEGER DEFAULT 0)");
     db.run("CREATE TABLE IF NOT EXISTS shifts (user TEXT, start_date TEXT, end_date TEXT)");
-    db.run("CREATE TABLE IF NOT EXISTS holidays (date TEXT, holiday TEXT)");
-    db.run("CREATE TABLE IF NOT EXISTS prices (price_name TEXT PRIMARY KEY NOT NULL, price INTEGER)");
-    createPrices();
-    function createPrices() {
-      var stmt = db.prepare("INSERT INTO prices VALUES (?, ?)");
-      for (var key in priceChart) {
-        stmt.run(key, priceChart[key]);
-      }
-      stmt.finalize();
-    }
   });
+  console.log("DB Initialized");
   db.close();
 }
 
