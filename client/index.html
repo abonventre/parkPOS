@@ -1,0 +1,32 @@
+<!-- index.html -->
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="parkPOS">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title>parkPOS</title>
+
+    <!-- SCROLLS -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"><!-- load bootstrap -->
+</head>
+
+<body>
+    <div ui-view></div>
+
+    <!-- SPELLS -->
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script><!-- load jquery -->
+    <script src="/bower_components/angular/angular.min.js"></script><!-- load angular -->
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script><!-- load angular ui router -->
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script><!-- load angular ui router -->
+    <script src="/bower_components/moment/min/moment.min.js"></script><!-- load angular ui router -->
+    <script src="/bower_components/angular-moment/angular-moment.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/config.router.js"></script>
+    <script src="js/services/data-robot.js"></script>
+    <script src="js/controllers/mainCtrl.js"></script>
+</body>
+</html>

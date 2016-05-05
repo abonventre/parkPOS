@@ -54,13 +54,33 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
-app.get('/', function(req,res){
-  res.send('test');
-});
+var options = {
+    root: __dirname + '/client/',
+    dotfiles: 'deny',
+    headers: {
+        'x-timestamp': Date.now(),
+        'x-sent': true
+    }
+  };
+
+// app.get('/', function(req,res){
+//   res.send('test');
+// });
+
+app.use(express.static(__dirname + '/client'));
 
 app.use('/tickets', tickets);
 app.use('/prices', prices);
 app.use('/shifts', shifts);
+
+app.get('*', function(req, res) {
+        res.sendFile('index.html', options, function(err){
+          if (err) {
+            console.log(err);
+            res.status(err.status).end();
+          }
+        }); // load the single view file (angular will handle the page changes on the front-end)
+    });
 
 app.listen(3333);
 console.log('Listening on 3333');

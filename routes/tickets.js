@@ -91,7 +91,6 @@ module.exports = function(db, prices, config){
         console.error(err);
         res.json({'error': 'Was not able to insert ticket to db.'});
       };
-      console.error(err);
       res.json({'lastID': this.lastID, 'total':total});
     });
 
