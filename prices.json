@@ -1,8 +1,8 @@
 {
-  daily: 10,
-  weekend: 17,
-  weekendSpecial: 50,
-  weekly: 85,
-  monthly: 357,
-  worker: 25
+  "daily": 10,
+  "weekend": 17,
+  "weekendSpecial": 50,
+  "weekly": 85,
+  "monthly": 357,
+  "worker": 25
 }
