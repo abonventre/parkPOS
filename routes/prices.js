@@ -5,9 +5,11 @@ var router = express.Router();
 
 
 module.exports = function(prices, config){
+  var priceCalculator = require('../helpers/priceCalculator')(prices, config);
   // define the index route
   router.get('/', function(req, res) {
-    res.json({'prices': prices});
+    var dayTable = priceCalculator.dayTable();
+    res.json({'prices': prices,'dayTable': dayTable});
   });
 
   return router;
