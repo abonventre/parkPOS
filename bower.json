@@ -23,6 +23,7 @@
     "bootstrap": "^3.3.6",
     "angular-route": "^1.5.5",
     "moment": "^2.13.0",
-    "angular-moment": "^0.10.3"
+    "angular-moment": "^0.10.3",
+    "font-awesome": "fontawesome#^4.6.2"
   }
 }
