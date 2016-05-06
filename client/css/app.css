@@ -4,3 +4,40 @@
 .top15 { margin-top:15px; }
 .top17 { margin-top:17px; }
 .top30 { margin-top:30px; }
+
+body {
+  margin-bottom: 100px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    min-height: 100px;
+    color: white;
+    text-align: center;
+    background-color: #43ac6a;
+    z-index: 99999;
+}
+
+.full button span {
+  background-color: limegreen;
+  border-radius: 32px;
+  color: black;
+}
+.partially button span {
+  background-color: orange;
+  border-radius: 32px;
+  color: black;
+}
+
+.footer .btn {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 780px) {
+    body {
+        margin-bottom: 300px;
+    }
+}

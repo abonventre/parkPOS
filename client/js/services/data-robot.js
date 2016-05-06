@@ -9,5 +9,9 @@ angular.module('data.robot', [])
         return $http.get(urlBase+'prices');
     };
 
+    factory.getDatePrice = function(date) {
+        return $http.get(urlBase+'prices/date/'+date);
+    }
+
 		return factory;
   }]);

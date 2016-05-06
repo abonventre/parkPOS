@@ -8,6 +8,32 @@ app.controller('mainCtrl', ['$scope', 'dataRobot', 'moment', function ($scope, d
     var vm = this;
     vm.selected = 1;
     vm.tickets = 1;
+    vm.custom = false;
+    vm.days = 1;
+
+    dataRobot.getPrices().then(function (response) {
+                //  console.log(response.data.prices);
+                 vm.prices = response.data.prices;
+                 vm.dayTable = response.data.dayTable;
+                 vm.select(1,false);
+             }, function (error) {
+                 vm.status = 'Unable to load posts: ' + error.message;
+             });
+
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    vm.customDate = tomorrow;
+
+    vm.changeDate = function(){
+      console.log(moment(vm.customDate).endOf('day').format());
+      dataRobot.getDatePrice(moment(vm.customDate).endOf('day').format()).then(function (response) {
+                  console.log(response.data.price);
+                   vm.price = response.data.price;
+               }, function (error) {
+                   vm.status = 'Unable to load posts: ' + error.message;
+               });
+    }
 
     vm.dayName = function(days){
       if(days == 30){
@@ -26,13 +52,19 @@ app.controller('mainCtrl', ['$scope', 'dataRobot', 'moment', function ($scope, d
 
     }
 
-    dataRobot.getPrices().then(function (response) {
-                //  console.log(response.data.prices);
-                 vm.prices = response.data.prices;
-                 vm.dayTable = response.data.dayTable;
-             }, function (error) {
-                 vm.status = 'Unable to load posts: ' + error.message;
-             });
+    vm.select = function(days, custom) {
+      if(custom){
+        vm.customDate = tomorrow;
+        vm.changeDate();
+        vm.selected = 0;
+        vm.custom = true;
+      }else{
+        vm.selected = days;
+        vm.days = days;
+        vm.custom = false;
+        vm.price = vm.dayTable[days];
+      }
+    }
 
     vm.increment = function(){
       vm.tickets++;
@@ -44,6 +76,4 @@ app.controller('mainCtrl', ['$scope', 'dataRobot', 'moment', function ($scope, d
       }
 
     }
-
-    vm.test = "testing1234";
 }]);
