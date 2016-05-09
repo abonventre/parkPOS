@@ -13,7 +13,6 @@ module.exports = function(db, config){
   router.get('/all', function(req, res) {
     db.all("SELECT rowid, * FROM shifts", function(err, rows) {
           res.json({'shifts': rows});
-
       });
   });
 
@@ -34,7 +33,10 @@ module.exports = function(db, config){
     var endDate = moment().format();
     console.log(req.params.id);
     db.run("UPDATE shifts SET end_date = ?, deposit = ? WHERE rowid = ?", [endDate, req.body.deposit, req.params.id], function(err){
-      res.json({balance: 100});
+      db.all("SELECT * FROM tickets WHERE shift_id = ?", [req.params.id], function(err, rows){
+        res.json({tickets: rows});
+      });
+
     })
   })
 

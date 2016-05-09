@@ -29,6 +29,11 @@ module.exports = function(db, prices, config){
     var startDate = moment().format();
     var total = 0;
 
+    if(!form.endDate) {
+      var duration = moment.duration({'days' : form.days});
+      form.endDate = moment(startDate).add(duration).format();
+    }
+
     if(!form.shift_id){
       return res.json({'error': 'Missing shift ID.'});
     }
