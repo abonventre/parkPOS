@@ -16,12 +16,18 @@ app.run(
   $stateProvider
     .state('home', {
       url: "/",
-      templateUrl: "tpl/home.html",
-      controller: "mainCtrl",
-      controllerAs: "main"
+      templateUrl: "tpl/home.html"
     })
-    .state('state2', {
-      url: "/state2",
-      templateUrl: "tpl/state2.html"
+    .state('startShift', {
+      url: "/startShift",
+      templateUrl: "tpl/startShift.html"
+    })
+    .state('endShift', {
+      url: "/endShift",
+      templateUrl: "tpl/endShift.html"
+    })
+    .state('printTickets', {
+      url: "/printTickets",
+      templateUrl: "tpl/printTickets.html"
     });
 }]);

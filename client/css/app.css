@@ -20,6 +20,21 @@ body {
     z-index: 99999;
 }
 
+.start-shift{
+  margin-top: 20px;
+}
+
+.start-shift-box {
+  background-color: #43ac6a;
+  color: white;
+  padding:40px;
+}
+.end-shift-box {
+  background-color: #f04124;
+  color: white;
+  padding:40px;
+}
+
 .full button span {
   background-color: limegreen;
   border-radius: 32px;

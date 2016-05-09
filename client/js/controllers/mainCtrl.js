@@ -71,7 +71,7 @@ app.controller('mainCtrl', ['$scope', 'dataRobot', 'moment', function ($scope, d
     }
 
     vm.decrement = function(){
-      if(vm.tickets > 0){
+      if(vm.tickets > 1){
         vm.tickets--;
       }
 
