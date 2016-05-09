@@ -13,5 +13,16 @@ angular.module('data.robot', [])
         return $http.get(urlBase+'prices/date/'+date);
     }
 
+		factory.printTicket = function(data) {
+        return $http.post(urlBase+'tickets/', data);
+    }
+
+    factory.startShift = function(data) {
+        return $http.post(urlBase+'shifts/', data);
+    }
+    factory.endShift = function(id, data) {
+        return $http.put(urlBase+'shifts/close/'+id, {'deposit': data});
+    }
+
 		return factory;
   }]);

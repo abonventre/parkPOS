@@ -43,7 +43,7 @@ var app = express();
 if(!dbExists){
   db.serialize(function(){
     db.run("CREATE TABLE IF NOT EXISTS tickets (shift_id INTEGER, start_date TEXT, days INTEGER, end_date TEXT, total INTEGER, voided INTEGER DEFAULT 0, failed INTEGER DEFAULT 0)");
-    db.run("CREATE TABLE IF NOT EXISTS shifts (user TEXT, start_date TEXT, end_date TEXT)");
+    db.run("CREATE TABLE IF NOT EXISTS shifts (user TEXT, start_date TEXT, end_date TEXT, deposit INTEGER)");
   });
   console.log("DB Initialized");
   db.close();

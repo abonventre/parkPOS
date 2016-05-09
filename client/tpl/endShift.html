@@ -10,9 +10,9 @@
       <form>
         <div class="form-group">
           <label for="exampleInputEmail1">Deposit Amount (Do not include drops)</label>
-          <input type="number" class="form-control input-lg" id="exampleInputEmail1" placeholder="Deposit">
+          <input type="number" class="form-control input-lg" id="exampleInputEmail1" placeholder="Deposit" ng-model="shift.deposit">
         </div>
-        <button type="submit" class="btn btn-default btn-lg">End Shift</button>
+        <button type="submit" class="btn btn-default btn-lg" ng-click="shift.endShift()">End Shift</button>
       </form>
     </div>
   </div>

@@ -15,9 +15,10 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css"><!-- load yeti -->
     <link rel="stylesheet" href="/css/app.css"><!-- load yeti -->
     <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/bower_components/angular-toastr/dist/angular-toastr.min.css">
 </head>
 
-<body ng-controller="mainCtrl as main">
+<body>
     <div ui-view></div>
 
 
@@ -28,10 +29,14 @@
     <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script><!-- load angular ui router -->
     <script src="/bower_components/moment/min/moment.min.js"></script><!-- load angular ui router -->
     <script src="/bower_components/angular-moment/angular-moment.js"></script>
+    <script src="/bower_components/ngstorage/ngStorage.min.js"></script>
+    <script src="/bower_components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
     <script src="js/core.js"></script>
     <script src="js/config.router.js"></script>
     <script src="js/services/data-robot.js"></script>
     <script src="js/controllers/mainCtrl.js"></script>
+    <script src="js/controllers/shiftCtrl.js"></script>
+    <script src="js/controllers/ticketCtrl.js"></script>
     <script src="js/controllers/datePickerCtrl.js"></script>
 </body>
 </html>

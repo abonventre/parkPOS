@@ -22,9 +22,10 @@ module.exports = function(db, config){
     // res.send(req.body);
     var form = req.body;
     var startDate = moment().format();
-    db.run("INSERT INTO shifts (user, start_date) VALUES (?, ?)", [form.user, startDate], function(err){
+    var user = req.body.firstName + ' ' + req.body.lastName;
+    db.run("INSERT INTO shifts (user, start_date) VALUES (?, ?)", [user, startDate], function(err){
       console.log('Created shift: ' + this.lastID);
-      res.json({'shiftID': this.lastID, 'startDate': startDate});
+      res.json({'shiftID': this.lastID, 'startDate': startDate, 'user': user});
     });
 
   });
@@ -32,8 +33,8 @@ module.exports = function(db, config){
   router.put('/close/:id', function(req, res){
     var endDate = moment().format();
     console.log(req.params.id);
-    db.run("UPDATE shifts SET end_date = ? WHERE rowid = ?", [endDate, req.params.id], function(err){
-      res.send('Updated');
+    db.run("UPDATE shifts SET end_date = ?, deposit = ? WHERE rowid = ?", [endDate, req.body.deposit, req.params.id], function(err){
+      res.json({balance: 100});
     })
   })
 
