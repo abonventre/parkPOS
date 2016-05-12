@@ -25,6 +25,7 @@
     "moment": "^2.13.0",
     "angular-moment": "^0.10.3",
     "font-awesome": "fontawesome#^4.6.2",
-    "ngstorage": "^0.3.10"
+    "ngstorage": "^0.3.10",
+    "angular-toastr": "^1.7.0"
   }
 }

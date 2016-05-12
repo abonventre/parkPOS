@@ -8,3 +8,4 @@ dist
 npm-debug.log
 old
 db.db
+.DS_Store
