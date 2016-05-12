@@ -3,7 +3,7 @@
 /* Controllers */
 
   // ticket controller
-app.controller('ticketCtrl', ['$scope', 'DataRobot', 'moment', function ($scope, DataRobot, moment) {
+app.controller('ticketCtrl', ['$scope', 'DataRobot', 'moment', '$localStorage', function ($scope, DataRobot, moment, $localStorage) {
 
     var vm = this;
     vm.selected = 1;
@@ -28,8 +28,9 @@ app.controller('ticketCtrl', ['$scope', 'DataRobot', 'moment', function ($scope,
     vm.changeDate = function(){
       console.log(moment(vm.customDate).endOf('day').format());
       DataRobot.getDatePrice(moment(vm.customDate).endOf('day').format()).then(function (response) {
-                  console.log(response.data.price);
+                  console.log(response.data);
                    vm.price = response.data.price;
+                   vm.days = response.data.days;
                }, function (error) {
                    vm.status = 'Unable to load posts: ' + error.message;
                });
@@ -75,5 +76,17 @@ app.controller('ticketCtrl', ['$scope', 'DataRobot', 'moment', function ($scope,
         vm.tickets--;
       }
 
+    }
+
+    vm.printTicket = function() {
+      var ticketData = {};
+      ticketData.days = vm.days;
+      ticketData.shift_id = $localStorage.shift.shiftID;
+      ticketData.amount = vm.tickets;
+      DataRobot.printTicket(ticketData).then(function (response) {
+                  console.log(response);
+               }, function (error) {
+                   vm.status = 'Unable to print ticket.';
+               });
     }
 }]);

@@ -5,7 +5,7 @@ var router = express.Router();
 
 var moment = require('moment');
 
-var printer = require('../helpers/printer');
+var ticketPrinter = require('../helpers/printer')();
 
 module.exports = function(db, prices, config){
   var priceCalculator = require('../helpers/priceCalculator')(prices, config);
@@ -24,29 +24,29 @@ module.exports = function(db, prices, config){
 
   // define the about route
   router.post('/', function(req, res) {
+    console.log(req.body);
+
     // res.send(req.body);
     var form = req.body;
     var startDate = moment().format();
     var total = 0;
 
-    if(!form.endDate) {
-      var duration = moment.duration({'days' : form.days});
-      form.endDate = moment(startDate).add(duration).format();
+    if(!form.days){
+      return res.json({'error': 'Missing amount of days.'});
     }
-
+    if(!form.endDate) {
+      var duration = moment.duration({'days' : form.days-1});
+      form.endDate = moment(startDate).startOf('day').add(duration).format();
+    }
     if(!form.shift_id){
       return res.json({'error': 'Missing shift ID.'});
     }
 
-    if(!form.days){
-      return res.json({'error': 'Missing amount of days.'});
-    }
-
-    if(!form.end_date){
-      return res.json({'error': 'Missing end date.'});
-    }
+    console.log(form.endDate);
 
     total = priceCalculator.days(form.days);
+
+    ticketPrinter.printTicket(startDate, form.endDate, form.days, total, "TESTTICKET", config.disclaimer);
 
     db.run("INSERT INTO tickets (shift_id, start_date, days, end_date, total) VALUES (?,?,?,?,?)", [form.shift_id, startDate, form.days, form.end_date, total], function(err){
       console.log('Created ticket: ' + this.lastID);
