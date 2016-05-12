@@ -3,7 +3,7 @@
 /* Controllers */
 
   // shift controller
-app.controller('shiftCtrl', ['$scope', 'dataRobot', 'moment', '$state', '$localStorage', 'toastr', function ($scope, dataRobot, moment, $state, $localStorage, toastr) {
+app.controller('shiftCtrl', ['$scope', 'DataRobot', 'moment', '$state', '$localStorage', 'toastr', function ($scope, DataRobot, moment, $state, $localStorage, toastr) {
 
     var vm = this;
     console.log($state.current.data);
@@ -16,7 +16,7 @@ app.controller('shiftCtrl', ['$scope', 'dataRobot', 'moment', '$state', '$localS
     vm.deposit = 0;
 
     vm.startShift = function() {
-      dataRobot.startShift(vm.user).then(function (response) {
+      DataRobot.startShift(vm.user).then(function (response) {
                   console.log(response.data);
                   toastr.success('Shift started successfully!', 'Shift Started!');
                   $localStorage.shift = response.data;
@@ -28,7 +28,7 @@ app.controller('shiftCtrl', ['$scope', 'dataRobot', 'moment', '$state', '$localS
 
     vm.endShift = function() {
       var id = $localStorage.shift.shiftID;
-      dataRobot.endShift(id, vm.deposit).then(function (response) {
+      DataRobot.endShift(id, vm.deposit).then(function (response) {
                   console.log(response.data);
                   toastr.success('Shift ended successfully!', 'Shift Ended!');
                   delete $localStorage.shift;

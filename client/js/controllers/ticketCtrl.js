@@ -3,7 +3,7 @@
 /* Controllers */
 
   // ticket controller
-app.controller('ticketCtrl', ['$scope', 'dataRobot', 'moment', function ($scope, dataRobot, moment) {
+app.controller('ticketCtrl', ['$scope', 'DataRobot', 'moment', function ($scope, DataRobot, moment) {
 
     var vm = this;
     vm.selected = 1;
@@ -11,7 +11,7 @@ app.controller('ticketCtrl', ['$scope', 'dataRobot', 'moment', function ($scope,
     vm.custom = false;
     vm.days = 1;
 
-    dataRobot.getPrices().then(function (response) {
+    DataRobot.getPrices().then(function (response) {
                 //  console.log(response.data.prices);
                  vm.prices = response.data.prices;
                  vm.dayTable = response.data.dayTable;
@@ -27,7 +27,7 @@ app.controller('ticketCtrl', ['$scope', 'dataRobot', 'moment', function ($scope,
 
     vm.changeDate = function(){
       console.log(moment(vm.customDate).endOf('day').format());
-      dataRobot.getDatePrice(moment(vm.customDate).endOf('day').format()).then(function (response) {
+      DataRobot.getDatePrice(moment(vm.customDate).endOf('day').format()).then(function (response) {
                   console.log(response.data.price);
                    vm.price = response.data.price;
                }, function (error) {
