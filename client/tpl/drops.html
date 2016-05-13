@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h1>parkPOS <span class="text-muted">Make a drop.</span></h1>
+    </div>
+  </div>
+
+  <div class="row start-shift">
+    <div class="col-md-6 col-md-offset-3 drop-box">
+      <form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Name</label>
+          <input type="text" class="form-control input-lg" id="exampleInputEmail1" placeholder="Name" ng-model="drop.drop.name">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Amount</label>
+          <input type="number" class="form-control input-lg" id="exampleInputPassword1" placeholder="Amount" ng-model="drop.drop.amount">
+        </div>
+        <button type="submit" class="btn btn-default btn-lg"ng-click="drop.makeDrop()">Drop it!</button>
+      </form>
+    </div>
+  </div>
+</div>

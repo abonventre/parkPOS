@@ -20,8 +20,12 @@ angular.module('data.robot', [])
     factory.startShift = function(data) {
         return $http.post(urlBase+'shifts/', data);
     }
-    factory.endShift = function(id, data) {
-        return $http.put(urlBase+'shifts/close/'+id, {'deposit': data});
+    factory.endShift = function(shift, data) {
+        return $http.put(urlBase+'shifts/close/'+shift.shiftID, {'shift':shift, 'deposit': data});
+    }
+
+		factory.makeDrop = function(data) {
+        return $http.post(urlBase+'drops/', data);
     }
 
 		return factory;

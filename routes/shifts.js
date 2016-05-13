@@ -3,6 +3,10 @@ var router = express.Router();
 
 var moment = require('moment');
 
+var colors = require('colors');
+
+var ticketPrinter = require('../helpers/printer')();
+
 module.exports = function(db, config){
   // define the home page route
   router.get('/', function(req, res) {
@@ -30,11 +34,37 @@ module.exports = function(db, config){
   });
 
   router.put('/close/:id', function(req, res){
-    var endDate = moment().format();
-    console.log(req.params.id);
-    db.run("UPDATE shifts SET end_date = ?, deposit = ? WHERE rowid = ?", [endDate, req.body.deposit, req.params.id], function(err){
+    var endDate = moment().format(),
+        shift = req.body.shift,
+        deposit = req.body.deposit;
+    db.run("UPDATE shifts SET end_date = ?, deposit = ? WHERE rowid = ?", [endDate, deposit, req.params.id], function(err){
       db.all("SELECT * FROM tickets WHERE shift_id = ?", [req.params.id], function(err, rows){
-        res.json({tickets: rows});
+        shift.endDate = endDate;
+        if(rows.length > 0){
+          var ticketTotal = 0;
+          var breakdown = {};
+          for (var i = 0; i < rows.length; i++) {
+            if(!rows[i].voided){
+              if(!breakdown[rows[i].days]){
+                breakdown[rows[i].days] = 0;
+              }
+              breakdown[rows[i].days] += rows[i].total;
+              ticketTotal += rows[i].total;
+            }
+          }
+          db.all("SELECT * FROM drops WHERE shift_id = ?", [req.params.id], function(err, dropRows){
+            var dropTotal = 0;
+            for (var i = 0; i < dropRows.length; i++) {
+              dropTotal += dropRows[i].amount;
+            }
+            ticketPrinter.printCloseOut(config.lot, shift, breakdown, ticketTotal, dropRows, dropTotal, deposit);
+            res.json({tickets: rows, breakdown: breakdown, });
+          });
+
+        }else{
+          res.json({'status':'No tickets printed.'});
+        }
+
       });
 
     })

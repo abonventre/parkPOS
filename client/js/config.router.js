@@ -60,6 +60,12 @@ app.run(
           controller: "ticketCtrl",
           controllerAs: "ticket"
         })
+        .state('app.drops', {
+          url: "/drops",
+          templateUrl: "tpl/drops.html",
+          controller: "dropCtrl",
+          controllerAs: "drop"
+        })
       .state('admin', {
         url: "/admin",
         templateUrl: "tpl/printTickets.html",

@@ -29,6 +29,13 @@ body {
   color: white;
   padding:40px;
 }
+
+.drop-box {
+  background-color: orange;
+  color: white;
+  padding:40px;
+}
+
 .end-shift-box {
   background-color: #f04124;
   color: white;

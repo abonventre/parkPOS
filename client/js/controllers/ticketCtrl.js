@@ -80,11 +80,13 @@ app.controller('ticketCtrl', ['$scope', 'DataRobot', 'moment', '$localStorage', 
 
     vm.printTicket = function() {
       var ticketData = {};
+
       ticketData.days = vm.days;
       ticketData.shift_id = $localStorage.shift.shiftID;
       ticketData.amount = vm.tickets;
       DataRobot.printTicket(ticketData).then(function (response) {
                   console.log(response);
+                  vm.tickets = 1;
                }, function (error) {
                    vm.status = 'Unable to print ticket.';
                });

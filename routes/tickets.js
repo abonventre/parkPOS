@@ -48,16 +48,10 @@ module.exports = function(db, prices, config){
 
     total = priceCalculator.days(form.days);
 
-    if(!config.printProduction){
-      console.log("Simulated print.".red +"  If you want to actually print, please adjust the 'printProduction' setting in the config.json file in /data.".gray);
-    }
-
     for (var i = 0; i < numTickets; i++) {
-      if(config.printProduction){
-        ticketPrinter.printTicket(startDate, form.endDate, form.days, total, "TESTTICKET", config.disclaimer);
-      }
+      ticketPrinter.printTicket(startDate, form.endDate, form.days, total, "TESTTICKET", config.disclaimer);
 
-      db.run("INSERT INTO tickets (shift_id, start_date, days, end_date, total) VALUES (?,?,?,?,?)", [form.shift_id, startDate, form.days, form.end_date, total], function(err){
+      db.run("INSERT INTO tickets (shift_id, start_date, days, end_date, total) VALUES (?,?,?,?,?)", [form.shift_id, startDate, form.days, form.endDate, total], function(err){
         console.log('Created ticket: '.blue + this.lastID);
         if(err){
           console.error(err);
@@ -68,10 +62,10 @@ module.exports = function(db, prices, config){
     }
 
     console.log('===TICKET==================================='.gray);
-    console.log('='.gray+' Start Date: '.bold+startDate);
-    console.log('='.gray+' End Date: '.bold+form.endDate);
-    console.log('='.gray+' Days: '.bold+form.days);
-    console.log('='.gray+' Total: '.bold+'$'+total);
+    console.log('='.gray+' Start Date: '.blue+startDate);
+    console.log('='.gray+' End Date: '.blue+form.endDate);
+    console.log('='.gray+' Days: '.blue+form.days);
+    console.log('='.gray+' Total: '.blue+'$'+total);
     console.log('============================================'.gray);
 
     res.json({'tickets': printedTickets, 'total':total});

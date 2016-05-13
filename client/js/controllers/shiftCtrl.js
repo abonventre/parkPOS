@@ -27,8 +27,8 @@ app.controller('shiftCtrl', ['$scope', 'DataRobot', 'moment', '$state', '$localS
     }
 
     vm.endShift = function() {
-      var id = $localStorage.shift.shiftID;
-      DataRobot.endShift(id, vm.deposit).then(function (response) {
+      var shift = $localStorage.shift;
+      DataRobot.endShift(shift, vm.deposit).then(function (response) {
                   console.log(response.data);
                   toastr.success('Shift ended successfully!', 'Shift Ended!');
                   delete $localStorage.shift;
