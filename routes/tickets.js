@@ -5,6 +5,8 @@ var router = express.Router();
 
 var moment = require('moment');
 
+var colors = require('colors');
+
 var ticketPrinter = require('../helpers/printer')();
 
 module.exports = function(db, prices, config){
@@ -27,9 +29,11 @@ module.exports = function(db, prices, config){
     console.log(req.body);
 
     // res.send(req.body);
-    var form = req.body;
-    var startDate = moment().format();
-    var total = 0;
+    var form = req.body,
+        startDate = moment().format(),
+        total = 0,
+        numTickets = req.body.amount,
+        printedTickets = [];
 
     if(!form.days){
       return res.json({'error': 'Missing amount of days.'});
@@ -42,21 +46,35 @@ module.exports = function(db, prices, config){
       return res.json({'error': 'Missing shift ID.'});
     }
 
-    console.log(form.endDate);
-
     total = priceCalculator.days(form.days);
 
-    ticketPrinter.printTicket(startDate, form.endDate, form.days, total, "TESTTICKET", config.disclaimer);
+    if(!config.printProduction){
+      console.log("Simulated print.".red +"  If you want to actually print, please adjust the 'printProduction' setting in the config.json file in /data.".gray);
+    }
 
-    db.run("INSERT INTO tickets (shift_id, start_date, days, end_date, total) VALUES (?,?,?,?,?)", [form.shift_id, startDate, form.days, form.end_date, total], function(err){
-      console.log('Created ticket: ' + this.lastID);
-      if(err){
-        console.error(err);
-        res.json({'error': 'Was not able to insert ticket to db.'});
-      };
-      res.json({'lastID': this.lastID, 'total':total});
-    });
+    for (var i = 0; i < numTickets; i++) {
+      if(config.printProduction){
+        ticketPrinter.printTicket(startDate, form.endDate, form.days, total, "TESTTICKET", config.disclaimer);
+      }
 
+      db.run("INSERT INTO tickets (shift_id, start_date, days, end_date, total) VALUES (?,?,?,?,?)", [form.shift_id, startDate, form.days, form.end_date, total], function(err){
+        console.log('Created ticket: '.blue + this.lastID);
+        if(err){
+          console.error(err);
+          res.json({'error': 'Was not able to insert ticket to db.'});
+        };
+        printedTickets.push(this.lastID);
+      });
+    }
+
+    console.log('===TICKET==================================='.gray);
+    console.log('='.gray+' Start Date: '.bold+startDate);
+    console.log('='.gray+' End Date: '.bold+form.endDate);
+    console.log('='.gray+' Days: '.bold+form.days);
+    console.log('='.gray+' Total: '.bold+'$'+total);
+    console.log('============================================'.gray);
+
+    res.json({'tickets': printedTickets, 'total':total});
   });
 
   return router;
