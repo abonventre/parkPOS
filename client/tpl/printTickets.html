@@ -10,10 +10,10 @@
             Select the return date.
           </p>
           <div class="row">
-            <div class="col-md-6 top10" ng-repeat="(days, price) in ticket.dayTable">
+            <div class="col-sm-6 top10" ng-repeat="(days, price) in ticket.dayTable">
               <button class="btn btn-default btn-block btn-lg" ng-class="{'btn-info': ticket.selected==days}" ng-click="ticket.select(days, false)">{{ ticket.dayName(days) }}</button>
             </div>
-            <div class="col-md-12 top10">
+            <div class="col-sm-12 top10">
               <button class="btn btn-default btn-block btn-lg" ng-class="{'btn-info': ticket.custom}" ng-click="ticket.select(false, true)">Custom</button>
             </div>
           </div>

@@ -61,12 +61,12 @@ module.exports = function(db, prices, config){
       });
     }
 
-    console.log('===TICKET==================================='.gray);
-    console.log('='.gray+' Start Date: '.blue+startDate);
-    console.log('='.gray+' End Date: '.blue+form.endDate);
-    console.log('='.gray+' Days: '.blue+form.days);
-    console.log('='.gray+' Total: '.blue+'$'+total);
-    console.log('============================================'.gray);
+    console.log(' ===TICKET==================================='.gray);
+    console.log(' ='.gray+' Start Date: '.blue+startDate);
+    console.log(' ='.gray+' End Date: '.blue+form.endDate);
+    console.log(' ='.gray+' Days: '.blue+form.days);
+    console.log(' ='.gray+' Total: '.blue+'$'+total);
+    console.log(' ============================================'.gray);
 
     res.json({'tickets': printedTickets, 'total':total});
   });

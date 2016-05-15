@@ -26,7 +26,12 @@ module.exports = function(db, config){
     var form = req.body;
     var timestamp = moment().format();
     db.run("INSERT INTO drops (shift_id, timestamp, name, amount) VALUES (?, ?, ?, ?)", [form.shiftID, timestamp, form.name, form.amount], function(err){
-      console.log('Made Drop: ' + form.amount);
+      console.log(' ===DROP====================================='.gray);
+      console.log(' ='.gray+' **Created**: '.blue);
+      console.log(' ='.gray+' Timestamp: '.blue+timestamp);
+      console.log(' ='.gray+' Name: '.blue+form.name);
+      console.log(' ='.gray+' Amount: '.blue+form.amount);
+      console.log(' ============================================'.gray);
       res.json({'drop':form.amount});
     });
 

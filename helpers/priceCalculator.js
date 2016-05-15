@@ -1,6 +1,7 @@
 'use strict';
 
 var moment = require('moment');
+var holidays = require('../data/holidays.json');
 
 module.exports = function(prices, config){
   var module = {};
@@ -12,11 +13,26 @@ module.exports = function(prices, config){
         startDate = moment().format();
 
     for(var i=0, len=days; i<len; i++){
-      var duration = moment.duration({'days' : i});
-      daysArray.push(moment(startDate).add(duration).day());
-    }
+      var duration = moment.duration({'days' : i}),
+          newDate = moment(startDate).add(duration),
+          holiday = false;
 
-    // var daysArrayOG = JSON.parse(JSON.stringify(daysArray));
+      for (var j = 0;  j < holidays.dates.length; j++) {
+        if(newDate.format('M/D/YYYY') == holidays.dates[j].date){
+          console.log(("Holiday on "+holidays.dates[j].date).red.underline);
+          daysArray.push(6);
+          holiday = true;
+        }
+      }
+
+      if(!holiday){
+        // console.log('Regular'.blue);
+        daysArray.push(newDate.day());
+      }
+
+      // console.log(daysArray);
+
+    }
 
     while(daysRemaining > 0){
       if(daysRemaining >= 30){

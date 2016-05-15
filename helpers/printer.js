@@ -35,6 +35,26 @@ module.exports = function(){
 
   }
 
+  module.printDrop = function(timestamp, shift, name, amount){
+      console.log("printTicket() invoked.");
+      console.log(endDate);
+      var template = [
+        initializePrinter,
+        "\nCENTER",
+        blockWaterTaxiText,
+        "\nTEXT270 4 0 420 290 This is a Drop Receipt!",
+        "\nLEFT",
+        "\nTEXT270 4 0 350 250 Shift: "+shift.shiftID,
+        "\nTEXT270 4 0 300 250 Employee: "+shift.user,
+        "\nTEXT270 4 0 250 250 Timestamp: "+moment(timestamp).format("M/D/YY h:mm:a"),
+        "\nTEXT270 4 0 200 250 Name: "+name,
+        "\nTEXT270 4 0 150 250 Amount: $"+amount,
+        finalizePrinter
+      ];
+      printThis(template);
+
+  }
+
   module.printCloseOut = function(lot, shift, breakdown, ticketTotal, drops, dropTotal, deposit){
       console.log("printCloseOut() invoked.");
       var template = [
@@ -77,7 +97,7 @@ module.exports = function(){
 
   function printThis(template) {
     if(!config.printProduction){
-      console.log("Simulated print.".red +"  If you want to actually print, please adjust the 'printProduction' setting in the config.json file in /data.".gray);
+      console.log("Simulated print.".red +"  If you want to actually print, please set the 'printProduction' setting to 'true' in the config.json file in /data.".gray);
     }else{
       var buffer = new Buffer(template.join(''));
       // console.log(template);
