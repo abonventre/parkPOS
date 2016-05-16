@@ -35,6 +35,7 @@ module.exports = function(db, prices, config){
         numTickets = req.body.amount,
         printedTickets = [];
 
+    console.log("Checking form data...");
     if(!form.days){
       return res.json({'error': 'Missing amount of days.'});
     }
@@ -45,7 +46,7 @@ module.exports = function(db, prices, config){
     if(!form.shift_id){
       return res.json({'error': 'Missing shift ID.'});
     }
-
+    console.log("Calculating price...");
     total = priceCalculator.days(form.days);
     console.log("Calulated Price:" + total.toString());
     for (var i = 0; i < numTickets; i++) {
