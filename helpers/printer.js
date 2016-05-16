@@ -96,7 +96,7 @@ module.exports = function(){
         "\n==Breakdown=="
       ];
       for (var key in breakdown) {
-        template.push("\n"+key+": $"+breakdown[key]);
+        template.push("\n"+key+": ("+breakdown[key].qty+") $"+breakdown[key].total);
       }
       template.push(
         "\nTotal: $"+ticketTotal,

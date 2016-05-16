@@ -59,13 +59,14 @@ module.exports = function(db, config){
         if(rows.length > 0){
           var ticketTotal = 0;
           var breakdown = {};
-          for (var i = 0; i < rows.length; i++) {
-            if(!rows[i].voided){
-              if(!breakdown[rows[i].days]){
-                breakdown[rows[i].days] = 0;
+          for (var i = 0; i < tickets.length; i++) {
+            if(!tickets[i].voided){
+              if(!breakdown[tickets[i].days]){
+                breakdown[tickets[i].days] = {'qty':0,'total':0};
               }
-              breakdown[rows[i].days] += rows[i].total;
-              ticketTotal += rows[i].total;
+              breakdown[tickets[i].days].qty++;
+              breakdown[tickets[i].days].total += tickets[i].total;
+              ticketTotal += tickets[i].total;
             }
           }
           db.all("SELECT * FROM drops WHERE shift_id = ?", [req.params.id], function(err, dropRows){
@@ -122,9 +123,10 @@ module.exports = function(db, config){
             for (var i = 0; i < tickets.length; i++) {
               if(!tickets[i].voided){
                 if(!breakdown[tickets[i].days]){
-                  breakdown[tickets[i].days] = 0;
+                  breakdown[tickets[i].days] = {'qty':0,'total':0};
                 }
-                breakdown[tickets[i].days] += tickets[i].total;
+                breakdown[tickets[i].days].qty++;
+                breakdown[tickets[i].days].total += tickets[i].total;
                 ticketTotal += tickets[i].total;
               }
             }
