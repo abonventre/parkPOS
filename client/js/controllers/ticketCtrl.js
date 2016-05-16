@@ -83,6 +83,7 @@ app.controller('ticketCtrl', ['$scope', 'DataRobot', 'moment', '$localStorage', 
 
       ticketData.days = vm.days;
       ticketData.shift_id = $localStorage.shift.shiftID;
+      ticketData.shift = $localStorage.shift;
       ticketData.amount = vm.tickets;
       DataRobot.printTicket(ticketData).then(function (response) {
                   console.log(response);

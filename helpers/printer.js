@@ -15,27 +15,51 @@ var printer = require("printer"),
 module.exports = function(){
   var module = {};
 
-  module.printTicket = function(startDate, endDate, days, total, serial, disclaimer){
+  module.printTicket = function(lot, startDate, endDate, days, total, serial, disclaimer){
       console.log("printTicket() invoked.");
       console.log(endDate);
       var template = [
         initializePrinter,
         "\nCENTER",
-        "\nML 40\nTEXT 0 3 0 30\n"+disclaimer.join("\n")+"\nENDML",
+        "\nML 25\nTEXT 7 0 0 15\n"+disclaimer.join("\n")+"\nENDML",
+        "\nML 25\nTEXT270 7 0 150 600\n"+disclaimer.join("\n")+"\nENDML",
+        "\nML 25\nTEXT 7 0 0 105",
+        "\nIn: "+moment(startDate).format("M/D/YY")+" Out: "+moment(endDate).format("M/D/YY"),
+        "\nTotal: $"+total+" Serial: "+serial,
+        "\nENDML",
         blockWaterTaxiText,
-        "\nTEXT270 4 0 420 290 Fire Island Terminal Inc.",
+        "\nTEXT270 4 0 410 290 Fire Island Terminal Inc.",
         "\nLEFT",
-        "\nTEXT270 4 0 350 250 Entered: "+moment(startDate).format("MM-DD-YYYY"),
-        "\nTEXT270 4 0 300 250 Paid Through: "+moment(endDate).format("MM-DD-YYYY"),
-        "\nTEXT270 4 0 250 250 Days: "+days,
-        "\nTEXT270 4 0 200 250 Total: $"+total,
+        "\nTEXT90 7 0 20 150 | RECEIPT |",
+        "\nTEXT270 7 0 490 20 | RECEIPT |",
+        "\nTEXT270 4 0 450 250 "+moment(startDate).format("YYYY"),
+        "\nINVERSE-LINE 400 350 400 240 55",
+        "\nLINE 175 240 175 1050 5",
+        "\nLINE 175 625 75 625 5",
+        "\nTEXT270 7 0 150 225 Lot:",
+        "\nTEXT270 4 0 130 225 "+lot.substring(0,4),
+        "\nTEXT270 7 0 150 380 Serial:",
+        "\nTEXT270 4 0 130 380 "+serial,
+        "\nTEXT270 4 0 360 225 In: ",
+        "\nTEXT270 4 3 305 225 "+moment(startDate).format("M/D"),
+        "\nTEXT270 7 0 225 225 "+moment(startDate).format("dddd"),
+        "\nTEXT270 4 0 360 500 Out: ",
+        "\nTEXT270 4 3 305 500 "+moment(endDate).format("M/D"),
+        "\nTEXT270 7 0 225 500 "+moment(endDate).format("dddd"),
+        "\nTEXT270 4 0 360 800 Total: ",
+        "\nTEXT270 4 3 305 800 $"+total,
+        "\nTEXT270 4 0 360 800 Total: ",
+        "\nTEXT270 4 3 305 800 $"+total,
+        // "\nTEXT270 4 0 300 250 Paid Through: "+moment(endDate).format("MM-DD-YYYY"),
+        // "\nTEXT270 4 0 250 250 Days: "+days,
+        // "\nTEXT270 4 0 200 250 Total: $"+total,
         finalizePrinter
       ];
       printThis(template);
 
   }
 
-  module.printDrop = function(timestamp, shift, name, amount){
+  module.printDrop = function(lot, timestamp, shift, name, amount){
       console.log("printTicket() invoked.");
       var template = [
         initializePrinter,
@@ -44,6 +68,7 @@ module.exports = function(){
         "\nTEXT270 4 0 420 290 This is a Drop Receipt!",
         "\nLEFT",
         "\nTEXT270 4 0 350 250 Shift: "+shift.shiftID,
+        "\nTEXT270 4 0 350 550 Lot: "+lot,
         "\nTEXT270 4 0 300 250 Employee: "+shift.user,
         "\nTEXT270 4 0 250 250 Timestamp: "+moment(timestamp).format("M/D/YY h:mm:a"),
         "\nTEXT270 4 0 200 250 Name: "+name,
@@ -64,8 +89,8 @@ module.exports = function(){
         "\nLot: "+lot,
         "\nShift: "+shift.shiftID,
         "\nEmployee: "+shift.user,
-        "\nStart: "+moment(shift.startDate).format("M/D/YY h:mma"),
-        "\nEnd: "+moment(shift.endDate).format("M/D/YY h:mma"),
+        "\nStart: "+moment(shift.start_date).format("M/D/YY h:mma"),
+        "\nEnd: "+moment(shift.end_date).format("M/D/YY h:mma"),
         "\n",
         "\n==Breakdown=="
       ];

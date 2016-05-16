@@ -57,12 +57,14 @@ module.exports = function(db, prices, config){
 
       db.run("INSERT INTO tickets (shift_id, start_date, days, end_date, total) VALUES (?,?,?,?,?)", [form.shift_id, startDate, form.days, form.endDate, total], function(err){
 
+        var userInitials = getInitials(form.shift.user, ' ');
+        var serial = form.shift_id+config.lot.charAt(0) + userInitials + this.lastID;
         console.log('Created ticket: '.blue + this.lastID);
         if(err){
           console.error(err);
           res.status(500).json({'message': 'Was not able to insert ticket to db.'});
         };
-        ticketPrinter.printTicket(startDate, form.endDate, form.days, total, "TESTTICKET", config.disclaimer);
+        ticketPrinter.printTicket(config.lot, startDate, form.endDate, form.days, total, serial, config.disclaimer);
 
         printedTickets.push(this.lastID);
       });
@@ -83,6 +85,27 @@ module.exports = function(db, prices, config){
     var jobInfo = ticketPrinter.checkJob(jobID);
     res.json({'info': jobInfo});
   });
+
+  function getInitials( name,delimeter ) {
+
+    if( name ) {
+
+        var array = name.split( delimeter );
+
+        switch ( array.length ) {
+
+            case 1:
+                return array[0].charAt(0).toUpperCase();
+                break;
+            default:
+                return array[0].charAt(0).toUpperCase() + array[ array.length -1 ].charAt(0).toUpperCase();
+        }
+
+    }
+
+    return false;
+
+}
 
   return router;
 };

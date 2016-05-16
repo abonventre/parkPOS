@@ -111,6 +111,7 @@ module.exports = function(db, config){
         res.status(400).json({'message':'No last shift was found.'});
       }else{
         var shift = rows[0];
+        shift.shiftID = shift.rowid;
         db.all("SELECT * FROM tickets WHERE shift_id = ?", [shift.rowid], function(err, tickets){
           if(err){
             res.status(500).json({'message':'There was an error getting the shifts tickets.'});

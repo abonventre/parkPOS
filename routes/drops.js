@@ -38,7 +38,7 @@ module.exports = function(db, config){
       console.log(' ='.gray+' Name: '.blue+form.name);
       console.log(' ='.gray+' Amount: '.blue+form.amount);
       console.log(' ============================================'.gray);
-      ticketPrinter.printDrop(timestamp, form.shift, form.name, form.amount);
+      ticketPrinter.printDrop(config.lot, timestamp, form.shift, form.name, form.amount);
       res.status(200).json({'drop':form.amount});
     });
 
