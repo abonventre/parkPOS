@@ -124,5 +124,10 @@ module.exports = function(){
 
   }
 
+  module.checkJob = function(jobID) {
+    var jobInfo = printer.getJob(printerName, jobID);
+    return jobInfo;
+  }
+
   return module;
 }

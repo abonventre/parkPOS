@@ -78,5 +78,11 @@ module.exports = function(db, prices, config){
     res.status(200).json({'tickets': printedTickets, 'total':total});
   });
 
+  router.get('/jobCheck/:id', function(req, res){
+    var jobID = req.params.id;
+    var jobInfo = ticketPrinter.checkJob(jobID);
+    res.json({'info': jobInfo});
+  });
+
   return router;
 };
