@@ -37,7 +37,6 @@ module.exports = function(){
 
   module.printDrop = function(timestamp, shift, name, amount){
       console.log("printTicket() invoked.");
-      console.log(endDate);
       var template = [
         initializePrinter,
         "\nCENTER",
