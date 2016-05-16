@@ -58,7 +58,7 @@ module.exports = function(db, prices, config){
       db.run("INSERT INTO tickets (shift_id, start_date, days, end_date, total) VALUES (?,?,?,?,?)", [form.shift_id, startDate, form.days, form.endDate, total], function(err){
 
         var userInitials = getInitials(form.shift.user, ' ');
-        var serial = form.shift_id+config.lot.charAt(0) + userInitials + this.lastID;
+        var serial = form.shift_id + config.lot.charAt(0) + userInitials + this.lastID;
         console.log('Created ticket: '.blue + this.lastID);
         if(err){
           console.error(err);
