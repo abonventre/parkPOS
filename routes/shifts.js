@@ -88,7 +88,7 @@ module.exports = function(db, config){
             console.log(' ='.gray+' Over/Under: '.blue+((dropTotal+deposit)-ticketTotal));
             console.log(' ============================================'.gray);
             ticketPrinter.printCloseOut(config.lot, shift, breakdown, ticketTotal, dropRows, dropTotal, deposit);
-            res.status(200).json({'message':'Shift report printed.','tickets': rows, 'breakdown': breakdown});
+            res.status(200).json({'message':'Shift report printed.','tickets': tickets, 'breakdown': breakdown});
           });
 
         }else{
