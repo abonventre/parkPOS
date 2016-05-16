@@ -51,12 +51,12 @@ module.exports = function(db, config){
       if(err){
         res.status(500).json({'message':'There was an error updating the shift.'});
       }
-      db.all("SELECT * FROM tickets WHERE shift_id = ?", [req.params.id], function(err, rows){
+      db.all("SELECT * FROM tickets WHERE shift_id = ?", [req.params.id], function(err, tickets){
         if(err){
           res.status(500).json({'message':'There was an error finding tickets.'});
         }
         shift.endDate = endDate;
-        if(rows.length > 0){
+        if(tickets.length > 0){
           var ticketTotal = 0;
           var breakdown = {};
           for (var i = 0; i < tickets.length; i++) {
