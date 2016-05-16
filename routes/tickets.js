@@ -26,8 +26,8 @@ module.exports = function(db, prices, config){
 
   // define the about route
   router.post('/', function(req, res) {
+    console.log("PrintTicket Route");
     console.log(req.body);
-
     // res.send(req.body);
     var form = req.body,
         startDate = moment().format(),
@@ -49,6 +49,7 @@ module.exports = function(db, prices, config){
     total = priceCalculator.days(form.days);
 
     for (var i = 0; i < numTickets; i++) {
+      console.log("Print?");
       ticketPrinter.printTicket(startDate, form.endDate, form.days, total, "TESTTICKET", config.disclaimer);
 
       db.run("INSERT INTO tickets (shift_id, start_date, days, end_date, total) VALUES (?,?,?,?,?)", [form.shift_id, startDate, form.days, form.endDate, total], function(err){
