@@ -28,5 +28,9 @@ angular.module('data.robot', [])
         return $http.post(urlBase+'drops/', data);
     }
 
+		factory.lastReport = function() {
+        return $http.get(urlBase+'shifts/last/');
+    }
+
 		return factory;
   }]);

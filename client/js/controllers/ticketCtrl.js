@@ -17,7 +17,7 @@ app.controller('ticketCtrl', ['$scope', 'DataRobot', 'moment', '$localStorage', 
                  vm.dayTable = response.data.dayTable;
                  vm.select(1,false);
              }, function (error) {
-                 vm.status = 'Unable to load posts: ' + error.message;
+                 toastr.error(error.data.message, 'Failed to get prices!');
              });
 
     var tomorrow = new Date();
@@ -32,7 +32,7 @@ app.controller('ticketCtrl', ['$scope', 'DataRobot', 'moment', '$localStorage', 
                    vm.price = response.data.price;
                    vm.days = response.data.days;
                }, function (error) {
-                   vm.status = 'Unable to load posts: ' + error.message;
+                   toastr.error(error.data.message, 'Failed to get date prices!');
                });
     }
 
@@ -88,7 +88,8 @@ app.controller('ticketCtrl', ['$scope', 'DataRobot', 'moment', '$localStorage', 
                   console.log(response);
                   vm.tickets = 1;
                }, function (error) {
-                   vm.status = 'Unable to print ticket.';
+                  console.log('Failed to print ticket: '+error.data.message);
+                  toastr.error(error.data.message, 'Failed to Print Ticket!');
                });
     }
 }]);

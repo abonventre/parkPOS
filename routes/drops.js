@@ -16,16 +16,22 @@ module.exports = function(db, config){
   // define the home page route
   router.get('/all', function(req, res) {
     db.all("SELECT rowid, * FROM drops", function(err, rows) {
-          res.json({'drops': rows});
+      if(err){
+        res.status(500).json({'message':'There was an error getting the drops.'});
+      }
+          res.status(200).json({'drops': rows});
       });
   });
 
-  // define the about route
+  // Make a drop
   router.post('/', function(req, res) {
     // res.send(req.body);
     var form = req.body;
     var timestamp = moment().format();
     db.run("INSERT INTO drops (shift_id, timestamp, name, amount) VALUES (?, ?, ?, ?)", [form.shiftID, timestamp, form.name, form.amount], function(err){
+      if(err){
+        res.status(500).json({'message':'There was an error making the drop.'});
+      }
       console.log(' ===DROP====================================='.gray);
       console.log(' ='.gray+' **Created**: '.blue);
       console.log(' ='.gray+' Timestamp: '.blue+timestamp);
@@ -33,7 +39,7 @@ module.exports = function(db, config){
       console.log(' ='.gray+' Amount: '.blue+form.amount);
       console.log(' ============================================'.gray);
       ticketPrinter.printDrop(timestamp, form.shift, form.name, form.amount);
-      res.json({'drop':form.amount});
+      res.status(200).json({'drop':form.amount});
     });
 
   });

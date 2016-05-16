@@ -20,6 +20,9 @@ module.exports = function(db, prices, config){
   // define the home page route
   router.get('/all', function(req, res) {
     db.all("SELECT rowid, * FROM tickets", function(err, rows) {
+      if(err){
+        res.status(500).json({'message':'There was an error getting all the tickets.'});
+      }
           res.json({'tickets': rows});
       });
   });
@@ -53,10 +56,11 @@ module.exports = function(db, prices, config){
       console.log("Print?");
 
       db.run("INSERT INTO tickets (shift_id, start_date, days, end_date, total) VALUES (?,?,?,?,?)", [form.shift_id, startDate, form.days, form.endDate, total], function(err){
+
         console.log('Created ticket: '.blue + this.lastID);
         if(err){
           console.error(err);
-          res.json({'error': 'Was not able to insert ticket to db.'});
+          res.status(500).json({'message': 'Was not able to insert ticket to db.'});
         };
         ticketPrinter.printTicket(startDate, form.endDate, form.days, total, "TESTTICKET", config.disclaimer);
 
@@ -71,7 +75,7 @@ module.exports = function(db, prices, config){
     console.log(' ='.gray+' Total: '.blue+'$'+total);
     console.log(' ============================================'.gray);
 
-    res.json({'tickets': printedTickets, 'total':total});
+    res.status(200).json({'tickets': printedTickets, 'total':total});
   });
 
   return router;

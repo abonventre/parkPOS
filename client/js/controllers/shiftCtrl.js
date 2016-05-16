@@ -22,7 +22,7 @@ app.controller('shiftCtrl', ['$scope', 'DataRobot', 'moment', '$state', '$localS
                   $localStorage.shift = response.data;
                   $state.go('app.printTickets');
                }, function (error) {
-                   vm.status = 'Unable to start shift: ' + error.message;
+                   toastr.error(error.data.message, 'Failed to Start Shift!');
                });
     }
 
@@ -34,7 +34,7 @@ app.controller('shiftCtrl', ['$scope', 'DataRobot', 'moment', '$state', '$localS
                   delete $localStorage.shift;
                   $state.go('app.startShift');
                }, function (error) {
-                   vm.status = 'Unable to end shift: ' + error.message;
+                   toastr.error(error.data.message, 'Failed to End Shift!');
                });
     }
 

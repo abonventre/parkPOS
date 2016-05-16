@@ -20,7 +20,7 @@ app.controller('dropCtrl', ['$scope', 'DataRobot', 'moment', '$state', '$localSt
                   toastr.success('Drop made successfully!', 'Drop Made!');
                   $state.go('app.printTickets');
                }, function (error) {
-                   vm.status = 'Unable to make drop: ' + error.message;
+                   toastr.error(error.data.message, 'Failed to Make the Drop!');
                });
     }
 

@@ -10,7 +10,7 @@ module.exports = function(prices, config){
   // define the index route
   router.get('/', function(req, res) {
     var dayTable = priceCalculator.dayTable();
-    res.json({'prices': prices,'dayTable': dayTable});
+    res.status(200).json({'prices': prices,'dayTable': dayTable});
   });
 
   router.get('/date/:date', function(req, res) {
@@ -20,7 +20,7 @@ module.exports = function(prices, config){
     var days = Math.ceil(date.diff(today, 'days', true));
     console.log(days);
     var price = priceCalculator.days(days);
-    res.json({'days': days, 'price': price});
+    res.status(200).json({'days': days, 'price': price});
   });
 
   return router;
