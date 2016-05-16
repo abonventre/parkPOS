@@ -34,6 +34,7 @@ module.exports = function(){
         "\nTEXT270 7 0 490 20 | RECEIPT |",
         "\nTEXT270 4 0 450 250 "+moment(startDate).format("YYYY"),
         "\nINVERSE-LINE 400 350 400 240 55",
+        "\nPATTERN 100",
         "\nLINE 175 240 175 1050 5",
         "\nLINE 175 625 75 625 5",
         "\nTEXT270 7 0 150 225 Lot:",
