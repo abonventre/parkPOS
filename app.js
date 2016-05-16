@@ -2,35 +2,31 @@
 
 var express = require('express'),
     bodyParser = require('body-parser'),
-    path = require('path'),
     fs = require('fs'),
-    appPath = path.resolve(),
     sqlite3 = require('sqlite3').verbose(),
-    dbExists = fs.existsSync(appPath+'/data/db.db'),
-    db = new sqlite3.Database(appPath+'/data/db.db'),
+    dbExists = fs.existsSync('./data/db.db'),
+    db = new sqlite3.Database('./data/db.db'),
     jsonfile = require('jsonfile');
-
-console.log(appPath);
 
 var filesToInit = ['config', 'prices', 'holidays'];
 
 for (var i = 0; i < filesToInit.length; i++) {
   // Check if files exist to begin with
-  if(!fs.existsSync(appPath+'/data/'+filesToInit[i]+'.json')){
+  if(!fs.existsSync('./data/'+filesToInit[i]+'.json')){
     initializeFile(filesToInit[i]);
   }
 }
 console.log('Files initialized.');
 
-var prices = require(appPath+'/data/prices.json');
-var config = require(appPath+'/data/config.json');
+var prices = require('./data/prices.json');
+var config = require('./data/config.json');
 
 function initializeFile(fileName) {
   // File name to create
-  var file = appPath+'/data/'+fileName+'.json';
+  var file = './data/'+fileName+'.json';
 
   //Init File
-  var init = require(appPath+'/'+fileName+'.init.json');
+  var init = require('./'+fileName+'.init.json');
 
   // Blocking write new file
   jsonfile.writeFileSync(file, init, {spaces: 2});
@@ -38,10 +34,10 @@ function initializeFile(fileName) {
 }
 
 // Routes
-var tickets = require(appPath+'/routes/tickets')(db, prices, config);
-var prices = require(appPath+'/routes/prices')(prices, config);
-var shifts = require(appPath+'/routes/shifts')(db, config);
-var drops = require(appPath+'/routes/drops')(db, config);
+var tickets = require('./routes/tickets')(db, prices, config);
+var prices = require('./routes/prices')(prices, config);
+var shifts = require('./routes/shifts')(db, config);
+var drops = require('./routes/drops')(db, config);
 
 var app = express();
 
