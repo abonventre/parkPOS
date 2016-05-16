@@ -39,8 +39,8 @@ module.exports = function(){
         "\nLINE 175 625 75 625 5",
         "\nTEXT270 7 0 150 225 Lot:",
         "\nTEXT270 4 0 130 225 "+lot.substring(0,4),
-        "\nTEXT270 7 0 150 380 Serial:",
-        "\nTEXT270 4 0 130 380 "+serial,
+        "\nTEXT270 7 0 150 340 Serial:",
+        "\nTEXT270 4 0 130 340 "+serial,
         "\nTEXT270 4 0 360 225 In: ",
         "\nTEXT270 4 3 305 225 "+moment(startDate).format("M/D"),
         "\nTEXT270 7 0 225 225 "+moment(startDate).format("dddd"),
@@ -82,6 +82,8 @@ module.exports = function(){
 
   module.printCloseOut = function(lot, shift, breakdown, ticketTotal, drops, dropTotal, deposit){
       console.log("printCloseOut() invoked.");
+      shift.end_date = shift.endDate;
+      shift.start_date = shift.startDate;
       var template = [
         initializePrinter,
         "\nLEFT",
