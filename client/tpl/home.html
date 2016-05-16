@@ -1,7 +1,22 @@
-<a ui-sref="app.startShift">Start Shift</a>
-<a ui-sref="app.endShift">End Shift</a>
-<a ui-sref="app.printTickets">Print Tickets</a>
-<a ui-sref="app.drops">Drops</a>
+<span class="menu-button" uib-dropdown on-toggle="main.toggled(open)" ng-show="main.activeShift">
+  <button class="btn btn-info btn-lg" id="simple-dropdown" uib-dropdown-toggle>
+    <i class="fa fa-bars"></i> Menu
+  </button>
+  <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+    <!-- <li ng-if="!main.activeShift">
+      <a ui-sref="app.startShift">Start Shift</a>
+    </li> -->
+    <li ng-if="main.activeShift">
+      <a ui-sref="app.endShift">End Shift</a>
+    </li>
+    <li ng-if="main.activeShift">
+      <a ui-sref="app.printTickets">Print Tickets</a>
+    </li>
+    <li ng-if="main.activeShift">
+      <a ui-sref="app.drops">Drops</a>
+    </li>
+  </ul>
+</span>
 
 <div ui-view>
   Loading
