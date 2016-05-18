@@ -26,7 +26,7 @@ app.run(
   }]).config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     //
     // For any unmatched url, redirect to /state1
-    $urlRouterProvider.otherwise("/app");
+    $urlRouterProvider.otherwise("/app/startShift");
     //
     // Now set up the states
     $stateProvider
