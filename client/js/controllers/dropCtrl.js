@@ -11,7 +11,7 @@ app.controller('dropCtrl', ['$scope', 'DataRobot', 'moment', '$state', '$localSt
       shiftID: $localStorage.shift.shiftID,
       shift: $localStorage.shift,
       name: '',
-      amount: 0
+      amount: null
     };
 
     vm.makeDrop = function() {

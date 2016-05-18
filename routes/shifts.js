@@ -17,7 +17,7 @@ module.exports = function(db, config){
   router.get('/all', function(req, res) {
     db.all("SELECT rowid, * FROM shifts", function(err, rows) {
       if(err){
-        res.status(500).json({'message':'There was an error getting all the shifts.'});
+        return res.status(500).json({'message':'There was an error getting all the shifts.'});
       }
           res.status(200).json({'shifts': rows});
       });
@@ -27,11 +27,14 @@ module.exports = function(db, config){
   router.post('/', function(req, res) {
     // res.send(req.body);
     var form = req.body;
+    if(!form.firstName || !form.lastName){
+      return res.status(400).json({'message':'You must enter your name.'});
+    }
     var startDate = moment().format();
     var user = req.body.firstName + ' ' + req.body.lastName;
     db.run("INSERT INTO shifts (user, start_date) VALUES (?, ?)", [user, startDate], function(err){
       if(err){
-        res.status(500).json({'message':'Could not insert shift into database.'});
+        return res.status(500).json({'message':'Could not insert shift into database.'});
       }
       console.log(' ===SHIFT===================================='.gray);
       console.log(' ='.gray+' **Started**: '.blue);
@@ -47,13 +50,20 @@ module.exports = function(db, config){
     var endDate = moment().format(),
         shift = req.body.shift,
         deposit = req.body.deposit;
+    console.log("deposit:");
+    console.log(deposit);
+    if(deposit == null){
+      console.log("Problem");
+      return res.status(400).json({'message': 'Deposit amount cannot be left blank.'});
+    }
+
     db.run("UPDATE shifts SET end_date = ?, deposit = ? WHERE rowid = ?", [endDate, deposit, req.params.id], function(err){
       if(err){
-        res.status(500).json({'message':'There was an error updating the shift.'});
+        return res.status(500).json({'message':'There was an error updating the shift.'});
       }
       db.all("SELECT * FROM tickets WHERE shift_id = ?", [req.params.id], function(err, tickets){
         if(err){
-          res.status(500).json({'message':'There was an error finding tickets.'});
+          return res.status(500).json({'message':'There was an error finding tickets.'});
         }
         shift.endDate = endDate;
         if(tickets.length > 0){
@@ -71,7 +81,7 @@ module.exports = function(db, config){
           }
           db.all("SELECT * FROM drops WHERE shift_id = ?", [req.params.id], function(err, dropRows){
             if(err){
-              res.status(500).json({'message':'There was an error getting the drops.'});
+              return res.status(500).json({'message':'There was an error getting the drops.'});
             }
             var dropTotal = 0;
             for (var i = 0; i < dropRows.length; i++) {
@@ -105,17 +115,17 @@ module.exports = function(db, config){
     console.log("Print Last Report");
     db.all("SELECT rowid, * FROM shifts WHERE end_date IS NOT NULL ORDER BY rowid DESC LIMIT 1", function(err, rows){
       if(err){
-        res.status(500).json({'message':'There was an error getting the last shift.'});
+        return res.status(500).json({'message':'There was an error getting the last shift.'});
       }
       console.log(rows.length);
       if(rows.length == 0){
-        res.status(400).json({'message':'No last shift was found.'});
+        return res.status(400).json({'message':'No last shift was found.'});
       }else{
         var shift = rows[0];
         shift.shiftID = shift.rowid;
         db.all("SELECT * FROM tickets WHERE shift_id = ?", [shift.rowid], function(err, tickets){
           if(err){
-            res.status(500).json({'message':'There was an error getting the shifts tickets.'});
+            return res.status(500).json({'message':'There was an error getting the shifts tickets.'});
           }
           if(tickets.length > 0){
             var ticketTotal = 0;
@@ -132,7 +142,7 @@ module.exports = function(db, config){
             }
             db.all("SELECT * FROM drops WHERE shift_id = ?", [shift.rowid], function(err, drops){
               if(err){
-                res.status(500).json({'message':'There was an error getting the shifts drops.'});
+                return res.status(500).json({'message':'There was an error getting the shifts drops.'});
               }
               var dropTotal = 0;
               for (var i = 0; i < drops.length; i++) {

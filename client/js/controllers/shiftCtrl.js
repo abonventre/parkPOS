@@ -13,7 +13,7 @@ app.controller('shiftCtrl', ['$scope', 'DataRobot', 'moment', '$state', '$localS
       lastName: ''
     };
 
-    vm.deposit = 0;
+    vm.deposit = null;
 
     vm.startShift = function() {
       DataRobot.startShift(vm.user).then(function (response) {

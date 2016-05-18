@@ -21,7 +21,7 @@ module.exports = function(db, prices, config){
   router.get('/all', function(req, res) {
     db.all("SELECT rowid, * FROM tickets", function(err, rows) {
       if(err){
-        res.status(500).json({'message':'There was an error getting all the tickets.'});
+        return res.status(500).json({'message':'There was an error getting all the tickets.'});
       }
           res.json({'tickets': rows});
       });
@@ -62,7 +62,7 @@ module.exports = function(db, prices, config){
         console.log('Created ticket: '.blue + this.lastID);
         if(err){
           console.error(err);
-          res.status(500).json({'message': 'Was not able to insert ticket to db.'});
+          return res.status(500).json({'message': 'Was not able to insert ticket to db.'});
         };
         ticketPrinter.printTicket(config.lot, startDate, form.endDate, form.days, total, serial, config.disclaimer);
 
