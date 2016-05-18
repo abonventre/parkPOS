@@ -126,7 +126,6 @@ module.exports = function(){
     if(!config.printProduction){
       console.log("Simulated print.".red +"  If you want to actually print, please set the 'printProduction' setting to 'true' in the config.json file in /data.".gray);
     }else{
-      console.log("test");
       var buffer = new Buffer(template.join(''));
       // console.log(template);
       printer.printDirect({
@@ -145,6 +144,7 @@ module.exports = function(){
                 return jobID;
           },
           error:function(err){
+            console.log("printThis Error:");
             console.log(err);
             return err;
           }
