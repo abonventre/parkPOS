@@ -146,6 +146,7 @@ module.exports = function(){
           error:function(err){
             console.log("printThis Error:");
             console.log(err);
+            console.log("end printThis error.")
             return err;
           }
       });
