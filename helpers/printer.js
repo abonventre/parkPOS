@@ -127,10 +127,12 @@ module.exports = function(){
       console.log("Simulated print.".red +"  If you want to actually print, please set the 'printProduction' setting to 'true' in the config.json file in /data.".gray);
     }else{
       var buffer = new Buffer(template.join(''));
-      // console.log(template);
+      console.log(template);
+      console.log(buffer);
+
       printer.printDirect({
           data: buffer, // Send the buffer to printer using CPCL
-          printer:printerName, // printer name
+          printer: printerName, // printer name
           type: printerFormat, // Use RAW for direct CPCL buffer communication
           options:
           {
@@ -146,7 +148,7 @@ module.exports = function(){
           error:function(err){
             console.log("printThis Error:");
             console.log(err);
-            console.log("end printThis error.")
+            console.log("end printThis error.");
             return err;
           }
       });
