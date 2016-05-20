@@ -20,9 +20,13 @@
       </form>
     </div>
   </div>
-  <div class="row top15 text-center">
-    <div class="col-md-12">
-      <button class="btn btn-lg" ng-click="main.printLastReport()">Print last report.</button>
+  <div class="row top15 text-center" ng-if="shift.openShifts.length">
+    <h3>Resume an open shift:</h3>
+    <p class="text-muted">
+      Click a name to resume an open shift as that user.
+    </p>
+    <div class="col-md-12 top15" ng-repeat="openShift in shift.openShifts">
+      <button class="btn btn-lg btn-primary" ng-click="shift.resumeShift(openShift)">{{openShift.user}}</button>
     </div>
   </div>
 </div>

@@ -32,5 +32,17 @@ angular.module('data.robot', [])
         return $http.get(urlBase+'shifts/last/');
     }
 
+		factory.openShifts = function() {
+				return $http.get(urlBase+'shifts/open');
+		}
+
+		factory.closedShifts = function() {
+				return $http.get(urlBase+'shifts/closed');
+		}
+
+		factory.reprint = function(id) {
+				return $http.get(urlBase+'shifts/past/'+id);
+		}
+
 		return factory;
   }]);

@@ -1,11 +1,11 @@
-<span class="menu-button" uib-dropdown on-toggle="main.toggled(open)" ng-show="main.activeShift">
+<span class="menu-button" uib-dropdown on-toggle="main.toggled(open)">
   <button class="btn btn-info btn-lg" id="simple-dropdown" uib-dropdown-toggle>
     <i class="fa fa-bars"></i> Menu
   </button>
   <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
-    <!-- <li ng-if="!main.activeShift">
+    <li ng-if="!main.activeShift">
       <a ui-sref="app.startShift">Start Shift</a>
-    </li> -->
+    </li>
     <li ng-if="main.activeShift">
       <a ui-sref="app.endShift">End Shift</a>
     </li>
@@ -15,8 +15,11 @@
     <li ng-if="main.activeShift">
       <a ui-sref="app.drops">Drops</a>
     </li>
-    <li ng-if="main.activeShift">
+    <li>
       <a ng-click="main.printLastReport()">Print Last Report</a>
+    </li>
+    <li>
+      <a ui-sref="app.reprint">Reprint a Report</a>
     </li>
   </ul>
 </span>

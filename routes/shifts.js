@@ -32,6 +32,15 @@ module.exports = function(db, config){
       });
   });
 
+  router.get('/closed', function(req, res) {
+    db.all("SELECT rowid, * FROM shifts WHERE end_date IS NOT NULL ORDER BY rowid DESC LIMIT 10", function(err, rows) {
+      if(err){
+        return res.status(500).json({'message':'There was an error getting open shifts.'});
+      }
+          res.status(200).json({'shifts': rows});
+      });
+  });
+
   // define the about route
   router.post('/', function(req, res) {
     // res.send(req.body);

@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h1>parkPOS <span class="text-muted">Reprint a shift report.</span></h1>
+    </div>
+  </div>
+
+  <div class="row start-shift">
+    <div class="col-md-6 col-md-offset-3 reprint-box">
+      <h3>Choose a shift:</h3>
+      <button class="btn btn-primary btn-block btn-lg" ng-repeat="closedShift in shift.closedShifts" ng-click="shift.reprint(closedShift)"><span class="pull-left text-info">{{closedShift.rowid}}</span>{{closedShift.user}}<span class="pull-right text-info">{{closedShift.start_date | date:"M/d"}}</span></button>
+    </div>
+  </div>
+</div>

@@ -8,6 +8,24 @@ app.controller('shiftCtrl', ['$scope', 'DataRobot', 'moment', '$state', '$localS
     var vm = this;
     console.log($state.current.data);
 
+    DataRobot.openShifts().then(function (response) {
+                console.log(response.data);
+                vm.openShifts = response.data.shifts;
+                console.log(vm.openShifts);
+             }, function (error) {
+                 toastr.error(error.data.message, 'Failed to get shifts!');
+             });
+
+    if($state.current.data.task == "reprint"){
+      DataRobot.closedShifts().then(function (response) {
+                  console.log(response.data);
+                  vm.closedShifts = response.data.shifts;
+                  console.log(vm.closedShifts);
+               }, function (error) {
+                   toastr.error(error.data.message, 'Failed to get shifts!');
+               });
+    }
+
     vm.user = {
       firstName: '',
       lastName: ''
@@ -35,6 +53,26 @@ app.controller('shiftCtrl', ['$scope', 'DataRobot', 'moment', '$state', '$localS
                   $state.go('app.startShift');
                }, function (error) {
                    toastr.error(error.data.message, 'Failed to End Shift!');
+               });
+    }
+
+    vm.resumeShift = function(openShift) {
+      var shift = {
+        'user': openShift.user,
+        'shiftID' : openShift.rowid,
+        'startDate' : openShift.start_date
+      }
+      $localStorage.shift = shift;
+
+      $state.go('app.printTickets');
+    }
+
+    vm.reprint = function(closedShift) {
+      DataRobot.reprint(closedShift.rowid).then(function (response) {
+                  console.log(response.data);
+                  toastr.success('Shift report reprinted!', 'Shift Reprinted!');
+               }, function (error) {
+                   toastr.error(error.data.message, 'Failed to Reprint Shift!');
                });
     }
 

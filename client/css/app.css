@@ -30,6 +30,13 @@ body {
   padding:40px;
 }
 
+.reprint-box {
+  background-color: #5BC0DE;
+  color: white;
+  padding:40px;
+}
+
+
 .drop-box {
   background-color: orange;
   color: white;
