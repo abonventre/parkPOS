@@ -23,6 +23,15 @@ module.exports = function(db, config){
       });
   });
 
+  router.get('/open', function(req, res) {
+    db.all("SELECT rowid, * FROM shifts WHERE end_date IS NULL", function(err, rows) {
+      if(err){
+        return res.status(500).json({'message':'There was an error getting open shifts.'});
+      }
+          res.status(200).json({'shifts': rows});
+      });
+  });
+
   // define the about route
   router.post('/', function(req, res) {
     // res.send(req.body);
@@ -122,6 +131,9 @@ module.exports = function(db, config){
         return res.status(400).json({'message':'No last shift was found.'});
       }else{
         var shift = rows[0];
+
+        shift.endDate = shift.end_date;
+        shift.startDate = shift.start_date;
         shift.shiftID = shift.rowid;
         db.all("SELECT * FROM tickets WHERE shift_id = ?", [shift.rowid], function(err, tickets){
           if(err){
@@ -150,8 +162,71 @@ module.exports = function(db, config){
               }
               console.log(' ===SHIFT===================================='.gray);
               console.log(' ='.gray+' **Ended**: '.blue);
-              console.log(' ='.gray+' Start Date: '.blue+shift.start_date);
-              console.log(' ='.gray+' End Date: '.blue+shift.end_date);
+              console.log(' ='.gray+' Start Date: '.blue+shift.startDate);
+              console.log(' ='.gray+' End Date: '.blue+shift.endDate);
+              console.log(' ='.gray+' User: '.blue+shift.user);
+              console.log(' ='.gray+' Sold: '.blue+ticketTotal);
+              console.log(' ='.gray+' Drops Total: '.blue+dropTotal);
+              console.log(' ='.gray+' Final Deposit: '.blue+shift.deposit);
+              console.log(' ='.gray+' Over/Under: '.blue+((dropTotal+shift.deposit)-ticketTotal));
+              console.log(' ============================================'.gray);
+              ticketPrinter.printCloseOut(config.lot, shift, breakdown, ticketTotal, drops, dropTotal, shift.deposit);
+              res.json({tickets: tickets, breakdown: breakdown, });
+            });
+          }else{
+            console.log("No tickets found.");
+            ticketPrinter.printCloseOut(config.lot, shift, {}, 0, [], 0, 0);
+            res.status(200).json({'message':'Shift report printed for zero total.'});
+          }
+        });
+      }
+    });
+  });
+
+  router.get('/past/:id', function(req, res){
+    console.log("Print Last Report");
+    db.all("SELECT rowid, * FROM shifts WHERE rowid = ?", [req.params.id], function(err, rows){
+      if(err){
+        return res.status(500).json({'message':'There was an error getting the last shift.'});
+      }
+      console.log(rows.length);
+      if(rows.length == 0){
+        return res.status(400).json({'message':'No last shift was found.'});
+      }else{
+        var shift = rows[0];
+
+        shift.endDate = shift.end_date;
+        shift.startDate = shift.start_date;
+        shift.shiftID = shift.rowid;
+        db.all("SELECT * FROM tickets WHERE shift_id = ?", [shift.rowid], function(err, tickets){
+          if(err){
+            return res.status(500).json({'message':'There was an error getting the shifts tickets.'});
+          }
+          if(tickets.length > 0){
+            var ticketTotal = 0;
+            var breakdown = {};
+            for (var i = 0; i < tickets.length; i++) {
+              if(!tickets[i].voided){
+                if(!breakdown[tickets[i].days]){
+                  breakdown[tickets[i].days] = {'qty':0,'total':0};
+                }
+                breakdown[tickets[i].days].qty++;
+                breakdown[tickets[i].days].total += tickets[i].total;
+                ticketTotal += tickets[i].total;
+              }
+            }
+            db.all("SELECT * FROM drops WHERE shift_id = ?", [shift.rowid], function(err, drops){
+              if(err){
+                return res.status(500).json({'message':'There was an error getting the shifts drops.'});
+              }
+              var dropTotal = 0;
+              for (var i = 0; i < drops.length; i++) {
+                dropTotal += drops[i].amount;
+              }
+              console.log(' ===SHIFT===================================='.gray);
+              console.log(' ='.gray+' **Ended**: '.blue);
+              console.log(' ='.gray+' Start Date: '.blue+shift.startDate);
+              console.log(' ='.gray+' End Date: '.blue+shift.endDate);
               console.log(' ='.gray+' User: '.blue+shift.user);
               console.log(' ='.gray+' Sold: '.blue+ticketTotal);
               console.log(' ='.gray+' Drops Total: '.blue+dropTotal);

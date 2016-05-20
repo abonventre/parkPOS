@@ -82,8 +82,6 @@ module.exports = function(){
 
   module.printCloseOut = function(lot, shift, breakdown, ticketTotal, drops, dropTotal, deposit){
       console.log("printCloseOut() invoked.");
-      shift.end_date = shift.endDate;
-      shift.start_date = shift.startDate;
       var template = [
         initializePrinter,
         "\nLEFT",
@@ -92,8 +90,8 @@ module.exports = function(){
         "\nLot: "+lot,
         "\nShift: "+shift.shiftID,
         "\nEmployee: "+shift.user,
-        "\nStart: "+moment(shift.start_date).format("M/D/YY h:mma"),
-        "\nEnd: "+moment(shift.end_date).format("M/D/YY h:mma"),
+        "\nStart: "+moment(shift.startDate).format("M/D/YY h:mma"),
+        "\nEnd: "+moment(shift.endDate).format("M/D/YY h:mma"),
         "\n",
         "\n==Breakdown=="
       ];
@@ -127,8 +125,8 @@ module.exports = function(){
       console.log("Simulated print.".red +"  If you want to actually print, please set the 'printProduction' setting to 'true' in the config.json file in /data.".gray);
     }else{
       var buffer = new Buffer(template.join(''));
-      console.log(template);
-      console.log(buffer);
+      // console.log(template);
+      // console.log(buffer);
 
       printer.printDirect({
           data: buffer, // Send the buffer to printer using CPCL
