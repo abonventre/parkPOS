@@ -6,7 +6,9 @@ var express = require('express'),
     sqlite3 = require('sqlite3').verbose(),
     dbExists = fs.existsSync('./data/db.db'),
     db = new sqlite3.Database('./data/db.db'),
-    jsonfile = require('jsonfile');
+    jsonfile = require('jsonfile'),
+    usbDetect = require('usb-detection'),
+    drivelist = require('drivelist');
 
 var filesToInit = ['config', 'prices', 'holidays'];
 
@@ -84,6 +86,17 @@ app.get('*', function(req, res) {
           }
         }); // load the single view file (angular will handle the page changes on the front-end)
     });
+
+// Check for usb drive attatchment
+usbDetect.on('add', function(device) {
+  console.log('Device Connected:', device.manufacturer ,device.deviceName);
+  console.log('Starting backup.');
+  drivelist.list(function(error, disks) {
+        if (error) throw error;
+        console.log(disks);
+});
+
+});
 
 app.listen(3333);
 console.log('Listening on 3333');
