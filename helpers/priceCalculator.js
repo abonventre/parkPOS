@@ -45,11 +45,16 @@ module.exports = function(prices, config){
         total += prices.weekly;
         daysRemaining -= 7;
         daysArray.splice(0,7);
-      }else if(daysArray[0] == 5 && daysArray[1] == 6 && daysArray[2] == 0 && config.lot == "Saltaire"){
+      }else if(daysArray[0] == 5 && daysArray[1] == 6 && daysArray[2] == 0 && config.weekendSpecial){
         // Weekend Special
         total += prices.weekendSpecial;
         daysRemaining -= 3;
         daysArray.splice(0,3);
+      }else if(daysArray[0] == 5 && config.fridaySpecial){
+        // Special Friday Pricing
+        total += prices.friday;
+        daysRemaining -= 1;
+        daysArray.splice(0,1);
       }else if(isInArray(daysArray[0], config.weekDays)){
         // Daily
         total += prices.daily;

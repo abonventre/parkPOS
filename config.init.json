@@ -3,6 +3,8 @@
   "weekendDays": [5,6,0],
   "lot": "Saltaire",
   "printerName": "Zebra_RW_420",
+  "weekendSpecial" : true,
+  "fridaySpecial" : false,
   "printProduction": false,
   "passcode": "$2a$10$tfsGceve55EQy88f2rg6jO6rAhmvAkKiMiwlH2wzA3jgFMDVP7V8S",
   "disclaimer": ["Management is not responsible", "for theft or damage to vehicles", "or contents on this property."]

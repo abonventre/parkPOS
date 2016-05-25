@@ -1,6 +1,7 @@
 {
   "daily": 10,
   "weekend": 17,
+  "friday": 10,
   "weekendSpecial": 50,
   "weekly": 85,
   "monthly": 357,
