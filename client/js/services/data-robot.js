@@ -17,6 +17,14 @@ angular.module('data.robot', [])
         return $http.post(urlBase+'tickets/', data);
     }
 
+		factory.setPrinter = function(data) {
+				return $http.post(urlBase+'printers/set', {printer: data});
+		}
+
+		factory.getPrinters = function() {
+				return $http.get(urlBase+'printers/list');
+		}
+
     factory.startShift = function(data) {
         return $http.post(urlBase+'shifts/', data);
     }

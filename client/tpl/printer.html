@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h1>parkPOS <span class="text-muted">Printer setup.</span></h1>
+    </div>
+  </div>
+
+  <div class="row start-shift">
+    <div class="col-md-6 col-md-offset-3 reprint-box">
+      <h3>Choose a printer:</h3>
+      <span ng-if="!printer.list">There are no valid printers installed. Please check your printer settings or install one.</span>
+      <button class="btn btn-primary btn-block btn-lg" ng-repeat="printerName in printer.list" ng-click="printer.setPrinter(printerName)">{{printerName}}</button>
+    </div>
+  </div>
+</div>

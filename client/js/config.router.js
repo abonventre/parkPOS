@@ -10,7 +10,7 @@ app.run(
         // now, redirect only not authenticated
         var activeShift = AuthRobot.isActiveShift();
 
-        if(stateName != "app.reprint" && stateName != "app.startShift" && !activeShift) {
+        if(stateName != "app.reprint" && stateName != "app.printer" && stateName != "app.startShift" && !activeShift) {
           toastr.warning('A shift must be started before attempting that action!', 'Warning');
           e.preventDefault(); // stop current execution
           $state.go('app.startShift');
@@ -61,6 +61,15 @@ app.run(
           controllerAs: "shift",
           data: {
             task: 'reprint'
+          }
+        })
+        .state('app.printer', {
+          url: "/printer",
+          templateUrl: "tpl/printer.html",
+          controller: "printerCtrl",
+          controllerAs: "printer",
+          data: {
+            task: 'printer'
           }
         })
         .state('app.printTickets', {

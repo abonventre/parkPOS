@@ -38,6 +38,7 @@ var tickets = require('./routes/tickets')(db, prices, config);
 var prices = require('./routes/prices')(prices, config);
 var shifts = require('./routes/shifts')(db, config);
 var drops = require('./routes/drops')(db, config);
+var printers = require('./routes/printers')(config);
 
 var app = express();
 
@@ -75,6 +76,7 @@ app.use('/tickets', tickets);
 app.use('/prices', prices);
 app.use('/shifts', shifts);
 app.use('/drops', drops);
+app.use('/printers', printers);
 
 app.get('*', function(req, res) {
         res.sendFile('index.html', options, function(err){
