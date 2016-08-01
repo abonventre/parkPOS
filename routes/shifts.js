@@ -49,7 +49,7 @@ module.exports = function(db, config){
       return res.status(400).json({'message':'You must enter your name.'});
     }
     var startDate = moment().format();
-    var user = req.body.firstName + ' ' + req.body.lastName;
+    var user = capitalizeFirstLetter(req.body.firstName) + ' ' + capitalizeFirstLetter(req.body.lastName);
     db.run("INSERT INTO shifts (user, start_date) VALUES (?, ?)", [user, startDate], function(err){
       if(err){
         return res.status(500).json({'message':'Could not insert shift into database.'});
@@ -63,6 +63,11 @@ module.exports = function(db, config){
     });
 
   });
+
+  function capitalizeFirstLetter(string) {
+      return string[0].toUpperCase() + string.slice(1);
+  }
+
 
   router.put('/close/:id', function(req, res){
     var endDate = moment().format(),
